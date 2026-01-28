@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+/* Import Premium Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;700&display=swap');
+
+@theme {
+  /* Brand Colors - Enterprise Light */
+  --color-primary-DEFAULT: var(--color-primary-DEFAULT);
+  /* Deep Navy - Professional */
+  --color-primary-light: var(--color-primary-light);
+  --color-brand-blue: var(--color-brand-blue);
+  /* Action Blue */
+
+  --color-bg-page: var(--color-bg-page);
+  /* Slate 50 */
+  --color-bg-card: var(--color-bg-card);
+
+  --color-text-main: var(--color-text-main);
+  /* Slate 900 */
+  --color-text-muted: var(--color-text-muted);
+  /* Slate 500 */
+
+  --color-border-subtle: var(--color-border-subtle);
+
+  --color-accent-emerald: #10b981;
+  --color-accent-rose: #f43f5e;
+  --color-accent-amber: #f59e0b;
+
+  /* Typography */
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+}
+
+:root {
+  /* Primary Brand Colors */
+  --color-primary-blue: #003366;
+  /* Deep Navy Blue - main brand color */
+  --color-primary-green: #00A651;
+  /* Bright Green - success, growth, financial */
+  --color-accent-orange: #FF6600;
+  /* Vibrant Orange - CTAs, highlights */
+
+  /* Neutral Colors */
+  --color-white: #FFFFFF;
+  --color-light-gray: #F5F5F5;
+  --color-medium-gray: #CCCCCC;
+  --color-dark-gray: #666666;
+  --color-text-primary: #333333;
+  --color-text-secondary: #666666;
+
+  /* Semantic Colors */
+  --color-success: #00A651;
+  /* Green for success states */
+  --color-warning: #FF6600;
+  /* Orange for warnings */
+  --color-error: #DC3545;
+  /* Red for errors */
+  --color-info: #003366;
+  /* Blue for information */
+
+  /* Background Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --bg-accent: #E8F5E9;
+  /* Light green tint */
+  --bg-dark: #003366;
+
+  /* Border Colors */
+  --border-light: #E0E0E0;
+  --border-medium: #CCCCCC;
+  --border-accent: #00A651;
+
+  /* Application Theme Mappings */
+  --color-primary-DEFAULT: var(--color-primary-green);
+  --color-primary-light: var(--color-text-secondary);
+  /* Mapping to secondary text color as fallback for 'light' */
+  --color-brand-blue: var(--color-primary-blue);
+
+  --color-bg-page: var(--bg-secondary);
+  --color-bg-card: var(--bg-primary);
+
+  --color-text-main: var(--color-text-primary);
+  --color-text-muted: var(--color-text-secondary);
+
+  --color-border-subtle: var(--border-light);
+}
+
+.dark {
+  --color-primary-DEFAULT: #f8fafc;
+  /* Invert for text in dark mode if used as text color, but usually primary is brand color. Let's adjust. */
+  /* Actually primary-DEFAULT was #0f172a (dark navy). In dark mode, we might want this to be lighter or stay brand. */
+  /* Let's map semantic names better. */
+
+  --color-bg-page: #0f172a;
+  /* Slate 900 */
+  --color-bg-card: #1e293b;
+  /* Slate 800 */
+
+  --color-text-main: #f8fafc;
+  /* Slate 50 */
+  --color-text-muted: #94a3b8;
+  /* Slate 400 */
+
+  --color-border-subtle: #334155;
+  /* Slate 700 */
+}
+
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-slate-900 font-sans antialiased;
+    background-color: var(--color-bg-page);
+    color: var(--color-text-main);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight text-slate-900;
+  }
+}
+
+@layer utilities {
+  .card-premium {
+    @apply bg-[var(--color-bg-card)] border border-[var(--color-border-subtle)] shadow-sm rounded-xl transition-all duration-300;
+  }
+
+  .card-premium:hover {
+    @apply shadow-md border-[var(--color-border-subtle)] -translate-y-0.5;
+  }
+
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-text-main)] to-[var(--color-text-muted)];
+  }
+
+  /* Animations */
+  .animate-enter {
+    opacity: 0;
+    animation: enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  /* Biztrak Components */
+  .btn-primary {
+    background-color: var(--color-accent-orange);
+    color: var(--color-white);
+    border: none;
+    @apply px-4 py-2 rounded-md transition-colors duration-200 cursor-pointer;
+  }
+
+  .btn-primary:hover {
+    background-color: #E55A00;
+  }
+
+  .btn-secondary {
+    background-color: var(--color-primary-green);
+    color: var(--color-white);
+    border: none;
+    @apply px-4 py-2 rounded-md transition-colors duration-200 cursor-pointer;
+  }
+
+  .header {
+    background-color: var(--color-primary-green);
+    color: var(--color-white);
+  }
+
+  .alert-success {
+    background-color: var(--bg-accent);
+    border-left: 4px solid var(--color-primary-green);
+    color: var(--color-text-primary);
+    @apply p-4 rounded-r-md;
+  }
+}
+
+@layer base {
+  a {
+    color: var(--color-primary-green);
+    @apply transition-colors duration-200;
+  }
+
+  a:hover {
+    color: var(--color-accent-orange);
+  }
+}
