@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MainLayout } from './layouts/MainLayout';
@@ -15,7 +15,7 @@ import { MultiCurrencyFX } from './pages/MultiCurrencyFX';
 import { AuditLog } from './pages/AuditLog';
 import { ExportBoardPack } from './pages/ExportBoardPack';
 
-function App() {
+const App: FC = () => {
   return (
     <ThemeProvider>
       <BrowserRouter>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ArrowRightLeft, Check, AlertTriangle, FileInput, Plus, RefreshCw, Filter } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRightLeft, Check, AlertTriangle, FileInput, Plus, RefreshCw } from 'lucide-react';
 import { clsx } from 'clsx';
 
 interface Transaction {
@@ -20,7 +20,7 @@ const mockTransactions: Transaction[] = [
   { id: 'TX004', date: '2026-01-22', seller: 'Securemetric VN', buyer: 'Securemetric MY', amount: 150000000, currency: 'VND', status: 'Disputed', type: 'Service' },
 ];
 
-export const InterCompany: React.FC = () => {
+export const InterCompany = () => {
   const [activeTab, setActiveTab] = useState<'transactions' | 'adjustments'>('transactions');
 
   return (
