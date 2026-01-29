@@ -191,9 +191,9 @@ export const ChartOfAccounts: React.FC = () => {
           </div>
           <div>
             <h4 className="text-sm font-bold text-[var(--color-text-main)] mb-1">Governance Note</h4>
-            <p className="text-sm text-[var(--color-text-muted)] leading-relaxed max-w-3xl">
-              Changes to Level 1 and Level 2 accounts require <span className="text-blue-600 dark:text-blue-400 font-semibold text-xs uppercase tracking-wider">Approval from Group CFO</span>.
-              All modifications are automatically logged in the <span className="font-medium text-[var(--color-text-main)] underline decoration-blue-500/30 underline-offset-4">Audit Trail</span> for enterprise compliance purposes.
+            <p className="text-sm text-[var(--color-text-muted)] leading-relaxed max-w-3xl font-medium">
+              Changes to Level 1 and Level 2 accounts require <span className="text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wider">Approval from Group CFO</span>.
+              All modifications are automatically logged in the <span className="font-bold text-[var(--color-text-main)] underline decoration-blue-500/30 underline-offset-4">Audit Trail</span> for enterprise compliance purposes.
             </p>
           </div>
         </div>

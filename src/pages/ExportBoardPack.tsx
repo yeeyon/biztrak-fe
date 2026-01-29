@@ -24,40 +24,40 @@ export const ExportBoardPack: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] bg-neutral-900 shadow-2xl">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-indigo-600/10 opacity-50"></div>
+      <div className="relative overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-card)] shadow-xl group/card">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-indigo-600/5 opacity-50"></div>
         <div className="relative z-10 p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-widest mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-4">
               Premium Feature
             </div>
-            <h2 className="text-3xl font-extrabold text-white mb-3 tracking-tight">Monthly Board Pack Generator</h2>
-            <p className="text-slate-400 text-lg max-w-xl mb-8 leading-relaxed">
+            <h2 className="text-3xl font-extrabold text-[var(--color-text-main)] mb-3 tracking-tight">Monthly Board Pack Generator</h2>
+            <p className="text-[var(--color-text-muted)] text-lg max-w-xl mb-8 leading-relaxed font-medium">
               Automatically compile the Executive Summary, Consolidated P&L, Variance Analysis, and Management Commentary into a single professional PDF tailored for board reviews.
             </p>
             <div className="flex flex-wrap items-center gap-6">
-              <button className="bg-white hover:bg-slate-100 text-slate-900 px-8 py-4 rounded-xl font-bold shadow-xl transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center gap-3">
+              <button className="bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-8 py-4 rounded-xl font-bold shadow-xl transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center gap-3">
                 <FileText size={20} /> Generate Jan 2026 Pack
               </button>
-              <div className="flex items-center gap-2 text-sm text-slate-400 font-medium">
+              <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] font-bold">
                 <div className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                  <CheckCircle size={16} className="text-emerald-400" />
+                  <CheckCircle size={16} className="text-emerald-500 dark:text-emerald-400" />
                 </div>
-                <span>All group data validated</span>
+                <span>All data validated</span>
               </div>
             </div>
           </div>
           <div className="hidden lg:block relative">
-            <div className="w-48 h-64 bg-slate-800 rounded-lg border border-slate-700 shadow-2xl transform rotate-6 translate-x-4"></div>
-            <div className="absolute inset-0 w-48 h-64 bg-slate-700 rounded-lg border border-slate-600 shadow-2xl flex flex-col p-4 transform -rotate-3 transition-transform hover:rotate-0 duration-500 cursor-pointer">
+            <div className="w-48 h-64 bg-[var(--color-bg-page)] rounded-lg border border-[var(--color-border-subtle)] shadow-2xl transform rotate-6 translate-x-4 opacity-50"></div>
+            <div className="absolute inset-0 w-48 h-64 bg-[var(--color-bg-card)] rounded-lg border border-[var(--color-border-subtle)] shadow-2xl flex flex-col p-4 transform -rotate-3 transition-transform group-hover/card:rotate-0 duration-500 cursor-pointer">
               <div className="w-12 h-1 bg-blue-500 mb-4 rounded-full"></div>
               <div className="space-y-2">
-                <div className="w-full h-2 bg-slate-600 rounded"></div>
-                <div className="w-5/6 h-2 bg-slate-600 rounded"></div>
-                <div className="w-4/6 h-2 bg-slate-600 rounded"></div>
+                <div className="w-full h-2 bg-[var(--color-bg-page)] rounded"></div>
+                <div className="w-5/6 h-2 bg-[var(--color-bg-page)] rounded"></div>
+                <div className="w-4/6 h-2 bg-[var(--color-bg-page)] rounded"></div>
               </div>
               <div className="mt-auto flex justify-between items-end">
-                <div className="w-10 h-10 rounded bg-slate-800"></div>
+                <div className="w-10 h-10 rounded bg-[var(--color-bg-page)]"></div>
                 <FileText size={24} className="text-blue-500 opacity-50" />
               </div>
             </div>

@@ -111,7 +111,7 @@ export const MultiCurrencyFX: React.FC = () => {
               </div>
               <div>
                 <p className="text-4xl font-bold text-[var(--color-text-main)] tracking-tight">+ RM 245,000</p>
-                <p className="text-sm text-emerald-700 dark:text-emerald-400 font-bold mt-1 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-lg inline-block">
+                <p className="text-sm text-emerald-600 dark:text-emerald-400 font-bold mt-1 bg-emerald-50 dark:bg-emerald-900/20 px-2.5 py-1 rounded-lg inline-block border border-emerald-100 dark:border-emerald-800/50">
                   Gain due to strengthening USD
                 </p>
               </div>
