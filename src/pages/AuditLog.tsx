@@ -4,10 +4,10 @@ import { clsx } from 'clsx';
 
 const logs = [
   { id: 1, action: 'Upload', user: 'Jane Smith', details: 'Uploaded BizTrak_MY_Jan26.csv', date: '2026-01-28 10:30', ip: '192.168.1.15' },
-  { id: 2, action: 'Edit', user: 'John Doe', details: 'Modified COA mapping for account 4500', date: '2026-01-28 09:45', ip: '10.0.0.5' },
+  { id: 2, action: 'Edit', user: 'Kelvin Yong', details: 'Modified COA mapping for account 4500', date: '2026-01-28 09:45', ip: '10.0.0.5' },
   { id: 3, action: 'System', user: 'System', details: 'Auto-matched 15 inter-company transactions', date: '2026-01-28 08:00', ip: 'Localhost' },
   { id: 4, action: 'Login', user: 'Robert Johnson', details: 'User login successful', date: '2026-01-27 18:30', ip: '203.115.44.12' },
-  { id: 5, action: 'Export', user: 'John Doe', details: 'Exported Monthly Board Pack (PDF)', date: '2026-01-27 16:20', ip: '10.0.0.5' },
+  { id: 5, action: 'Export', user: 'Kelvin Yong', details: 'Exported Monthly Board Pack (PDF)', date: '2026-01-27 16:20', ip: '10.0.0.5' },
 ];
 
 export const AuditLog: React.FC = () => {

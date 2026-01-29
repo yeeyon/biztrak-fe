@@ -356,7 +356,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose, isCollapsed = false, 
           <div className="relative shrink-0">
             <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center border-2 border-white shadow-sm shrink-0 overflow-hidden">
               <img
-                src="https://ui-avatars.com/api/?name=John+Doe&background=0f172a&color=fff"
+                src="https://ui-avatars.com/api/?name=Kelvin+Yong&background=0f172a&color=fff"
                 alt="User"
                 className="w-full h-full object-cover"
               />
@@ -369,7 +369,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose, isCollapsed = false, 
             isCollapsed ? "w-0 opacity-0 translate-x-[-10px] hidden" : "w-auto opacity-100 translate-x-0"
           )}>
             <div className="flex justify-between items-center mb-0.5">
-              <p className="text-sm font-bold text-[var(--color-text-main)] truncate">John Doe</p>
+              <p className="text-sm font-bold text-[var(--color-text-main)] truncate">Kelvin Yong</p>
             </div>
             <p className="text-xs font-medium text-[var(--color-text-muted)] truncate">Group CFO</p>
           </div>

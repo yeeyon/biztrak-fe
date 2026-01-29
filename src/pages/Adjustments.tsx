@@ -30,7 +30,7 @@ const mockAdjustments: Adjustment[] = [
         amount: 250000,
         currency: 'MYR',
         status: 'Posted',
-        createdBy: 'John Doe',
+        createdBy: 'Kelvin Yong',
     },
     {
         id: '2',
@@ -58,7 +58,7 @@ const mockAdjustments: Adjustment[] = [
         amount: 500000,
         currency: 'MYR',
         status: 'Draft',
-        createdBy: 'John Doe',
+        createdBy: 'Kelvin Yong',
     },
 ];
 

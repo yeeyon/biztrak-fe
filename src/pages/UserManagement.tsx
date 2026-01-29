@@ -4,7 +4,7 @@ import { User, Shield, Clock, MoreVertical, Plus, Search } from 'lucide-react';
 import { clsx } from 'clsx';
 
 const users = [
-  { id: 1, name: 'John Doe', email: 'john.doe@securemetric.com', role: 'Group CFO', status: 'Active', lastActive: '2 mins ago' },
+  { id: 1, name: 'Kelvin Yong', email: 'kelvin.yong@securemetric.com', role: 'Group CFO', status: 'Active', lastActive: '2 mins ago' },
   { id: 2, name: 'Jane Smith', email: 'jane.smith@securemetric.com', role: 'Subsidiary Admin (MY)', status: 'Active', lastActive: '1 hour ago' },
   { id: 3, name: 'Robert Johnson', email: 'robert.j@securemetric.com', role: 'Viewer (Board)', status: 'Active', lastActive: '3 days ago' },
   { id: 4, name: 'Sarah Lee', email: 'sarah.lee@securemetric.com', role: 'Subsidiary Admin (SG)', status: 'Inactive', lastActive: '2 weeks ago' },

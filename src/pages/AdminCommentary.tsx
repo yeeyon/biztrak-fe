@@ -24,7 +24,7 @@ const mockCommentaries: Commentary[] = [
         variance: '+8.0%',
         varianceAmount: 400000,
         comment: 'Strong performance driven by new enterprise deals. Closed 3 major contracts including ABC Corp (RM150K) and XYZ Ltd (RM120K). Pipeline remains healthy for Q1.',
-        author: 'John Doe',
+        author: 'Kelvin Yong',
         date: '2026-01-28',
         status: 'Approved',
     },

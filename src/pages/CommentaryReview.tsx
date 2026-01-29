@@ -6,7 +6,7 @@ const threads = [
     id: 1,
     title: 'Q1 OPEX Variance Inquiry',
     status: 'Action Required',
-    author: 'John Doe (CFO)',
+    author: 'Kelvin Yong (CFO)',
     date: '2 hours ago',
     preview: 'Please explain the significant increase in legal fees for the Indonesia subsidiary...',
     comments: 3
@@ -82,7 +82,7 @@ export const CommentaryReview: React.FC = () => {
           <div className="p-4 border-b border-[var(--color-border-subtle)] flex justify-between items-center bg-[var(--color-bg-page)]">
             <div>
               <h3 className="font-bold text-[var(--color-text-main)]">Q1 OPEX Variance Inquiry</h3>
-              <p className="text-xs text-[var(--color-text-muted)]">Started by John Doe (CFO) on Jan 28, 2026</p>
+              <p className="text-xs text-[var(--color-text-muted)]">Started by Kelvin Yong (CFO) on Jan 28, 2026</p>
             </div>
             <button className="text-[var(--color-text-muted)] hover:text-[var(--color-text-main)]">
               <MoreHorizontal size={20} />
@@ -92,7 +92,7 @@ export const CommentaryReview: React.FC = () => {
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <div className="flex gap-3">
               <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold shrink-0">
-                JD
+                KY
               </div>
               <div>
                 <div className="bg-[var(--color-bg-page)] p-3 rounded-lg rounded-tl-none">

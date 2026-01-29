@@ -27,7 +27,7 @@ const mockFeedback: Feedback[] = [
         response: 'Revenue was recognized upon delivery of software licenses on Jan 15th per MFRS 15 criteria. Contract signing occurred earlier but acceptance was confirmed on delivery date.',
         requestedBy: 'Group CFO',
         requestedDate: '2026-01-20',
-        respondedBy: 'John Doe',
+        respondedBy: 'Kelvin Yong',
         respondedDate: '2026-01-22',
         status: 'Acknowledged',
         priority: 'High',
