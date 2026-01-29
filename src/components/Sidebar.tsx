@@ -1,34 +1,100 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Database,
-  FileText,
+  Upload,
+  CheckCircle,
+  GitBranch,
   ArrowRightLeft,
+  FileText,
+  Clock,
   PieChart,
+  FileBarChart,
+  Scale,
+  Coins,
   TrendingUp,
+  BarChart3,
+  Search,
   MessageSquare,
+  MessageCircle,
+  ThumbsUp,
   Globe,
   Users,
-  FileCheck,
-  Settings,
   Download,
+  Settings,
   X,
   LogOut,
+  ChevronDown,
+  ChevronRight,
+  type LucideIcon,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 
-const menuItems = [
+interface MenuItem {
+  icon: LucideIcon;
+  label: string;
+  path?: string;
+  children?: {
+    icon: LucideIcon;
+    label: string;
+    path: string;
+  }[];
+}
+
+const menuItems: MenuItem[] = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
-  { icon: Database, label: 'Data Management', path: '/data-management' },
-  { icon: FileText, label: 'Chart of Accounts', path: '/coa' },
-  { icon: ArrowRightLeft, label: 'Inter-Company', path: '/inter-company' },
-  { icon: PieChart, label: 'Financial Reports', path: '/financial-reports' },
-  { icon: TrendingUp, label: 'Variance Analysis', path: '/variance-analysis' },
-  { icon: MessageSquare, label: 'Commentary & Review', path: '/commentary' },
+  {
+    icon: Database,
+    label: 'Data Management',
+    children: [
+      { icon: Upload, label: 'BizTrak Upload', path: '/data-management' },
+      { icon: CheckCircle, label: 'Data Validation', path: '/data-validation' },
+    ],
+  },
+  {
+    icon: GitBranch,
+    label: 'Chart of Accounts',
+    children: [
+      { icon: FileText, label: 'Group COA', path: '/coa' },
+      { icon: ArrowRightLeft, label: 'Subsidiary Mapping', path: '/coa/subsidiary-mapping' },
+    ],
+  },
+  {
+    icon: ArrowRightLeft,
+    label: 'Inter-Company',
+    children: [
+      { icon: FileText, label: 'Transactions', path: '/inter-company' },
+      { icon: Clock, label: 'Adjustments', path: '/inter-company/adjustments' },
+    ],
+  },
+  {
+    icon: PieChart,
+    label: 'Financial Reports',
+    children: [
+      { icon: FileBarChart, label: 'Income Statement', path: '/financial-reports' },
+      { icon: Scale, label: 'Balance Sheet', path: '/financial-reports/balance-sheet' },
+      { icon: Coins, label: 'Cash Flow', path: '/financial-reports/cash-flow' },
+    ],
+  },
+  {
+    icon: TrendingUp,
+    label: 'Variance Analysis',
+    children: [
+      { icon: BarChart3, label: 'Period Comparison', path: '/variance-analysis' },
+      { icon: Search, label: 'Drill-Down', path: '/variance-analysis/drill-down' },
+    ],
+  },
+  {
+    icon: MessageSquare,
+    label: 'Commentary & Review',
+    children: [
+      { icon: MessageCircle, label: 'Admin Commentary', path: '/commentary' },
+      { icon: ThumbsUp, label: 'Management Feedback', path: '/commentary/management-feedback' },
+    ],
+  },
   { icon: Globe, label: 'Multi-Currency & FX', path: '/multi-currency' },
   { icon: Users, label: 'User Management', path: '/users' },
-  { icon: FileCheck, label: 'Audit Log', path: '/audit-log' },
   { icon: Download, label: 'Export & Board Pack', path: '/export' },
   { icon: Settings, label: 'System Settings', path: '/settings' },
 ];
@@ -39,7 +105,181 @@ interface SidebarProps {
   toggleCollapse?: () => void;
 }
 
+// Selection indicator position state
+interface IndicatorPosition {
+  top: number;
+  height: number;
+  opacity: number;
+}
+
 export const Sidebar: React.FC<SidebarProps> = ({ onClose, isCollapsed = false, toggleCollapse }) => {
+  const location = useLocation();
+  const navRef = useRef<HTMLElement>(null);
+  const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
+  const [indicatorStyle, setIndicatorStyle] = useState<IndicatorPosition>({ top: 0, height: 0, opacity: 0 });
+
+  const [expandedMenus, setExpandedMenus] = useState<Set<string>>(() => {
+    // Auto-expand menu containing current path
+    const expanded = new Set<string>();
+    menuItems.forEach(item => {
+      if (item.children) {
+        const isChildActive = item.children.some(child => location.pathname === child.path);
+        if (isChildActive) {
+          expanded.add(item.label);
+        }
+      }
+    });
+    return expanded;
+  });
+
+  // Update indicator position when location changes
+  const updateIndicatorPosition = useCallback(() => {
+    const activeLink = linkRefs.current.get(location.pathname);
+    const navElement = navRef.current;
+
+    if (activeLink && navElement) {
+      const navRect = navElement.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+
+      setIndicatorStyle({
+        top: linkRect.top - navRect.top + navElement.scrollTop,
+        height: linkRect.height,
+        opacity: 1,
+      });
+    } else {
+      setIndicatorStyle(prev => ({ ...prev, opacity: 0 }));
+    }
+  }, [location.pathname]);
+
+  // Update position on location change and after menu expansion animations
+  useEffect(() => {
+    // Small delay to allow for menu expansion animation
+    const timeoutId = setTimeout(updateIndicatorPosition, 50);
+    return () => clearTimeout(timeoutId);
+  }, [location.pathname, expandedMenus, isCollapsed, updateIndicatorPosition]);
+
+  // Also update on window resize
+  useEffect(() => {
+    window.addEventListener('resize', updateIndicatorPosition);
+    return () => window.removeEventListener('resize', updateIndicatorPosition);
+  }, [updateIndicatorPosition]);
+
+  const toggleMenu = (label: string) => {
+    setExpandedMenus(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(label)) {
+        newSet.delete(label);
+      } else {
+        newSet.add(label);
+      }
+      return newSet;
+    });
+  };
+
+  const setLinkRef = (path: string) => (el: HTMLAnchorElement | null) => {
+    if (el) {
+      linkRefs.current.set(path, el);
+    } else {
+      linkRefs.current.delete(path);
+    }
+  };
+
+  const renderNavLink = (
+    icon: LucideIcon,
+    label: string,
+    path: string,
+    isChild: boolean = false
+  ) => {
+    const Icon = icon;
+    const isActive = location.pathname === path;
+
+    return (
+      <NavLink
+        key={path}
+        to={path}
+        ref={setLinkRef(path)}
+        onClick={onClose}
+        title={isCollapsed ? label : undefined}
+        className={clsx(
+          'group flex items-center gap-3 py-2.5 mx-3 rounded-xl transition-all duration-200 outline-none focus:ring-2 focus:ring-blue-500/20 relative',
+          isCollapsed ? "pl-[18px]" : isChild ? "pl-9" : "pl-3",
+          isActive
+            ? 'bg-blue-50 text-blue-600 font-semibold dark:bg-blue-950/50'
+            : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] hover:bg-[var(--color-bg-page)]',
+        )}
+      >
+        <Icon
+          size={isChild ? 18 : 20}
+          strokeWidth={isActive ? 2 : 1.75}
+          className={clsx(
+            "shrink-0 transition-transform duration-200",
+            isActive ? "scale-100" : "group-hover:scale-110"
+          )}
+        />
+        <span className={clsx(
+          "truncate transition-all duration-300 ease-in-out text-[14px]",
+          isCollapsed ? "w-0 opacity-0 translate-x-[-10px] ml-0" : "w-auto opacity-100 translate-x-0 ml-0"
+        )}>
+          {label}
+        </span>
+      </NavLink>
+    );
+  };
+
+  const renderMenuItem = (item: MenuItem) => {
+    if (item.children) {
+      const isExpanded = expandedMenus.has(item.label);
+      const hasActiveChild = item.children.some(child => location.pathname === child.path);
+      const Icon = item.icon;
+
+      return (
+        <div key={item.label}>
+          <button
+            onClick={() => toggleMenu(item.label)}
+            title={isCollapsed ? item.label : undefined}
+            className={clsx(
+              'group flex items-center gap-3 py-2.5 mx-3 rounded-xl transition-all duration-200 outline-none focus:ring-2 focus:ring-blue-500/20 relative w-[calc(100%-1.5rem)]',
+              isCollapsed ? "pl-[18px]" : "pl-3",
+              hasActiveChild
+                ? 'text-blue-600 font-semibold'
+                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] hover:bg-[var(--color-bg-page)]',
+            )}
+          >
+            <Icon
+              size={20}
+              strokeWidth={hasActiveChild ? 2 : 1.75}
+              className={clsx(
+                "shrink-0 transition-transform duration-200",
+                hasActiveChild ? "scale-100" : "group-hover:scale-110"
+              )}
+            />
+            <span className={clsx(
+              "truncate transition-all duration-300 ease-in-out text-[14px] flex-1 text-left",
+              isCollapsed ? "w-0 opacity-0 translate-x-[-10px] ml-0" : "w-auto opacity-100 translate-x-0 ml-0"
+            )}>
+              {item.label}
+            </span>
+            {!isCollapsed && (
+              <div className="mr-2 text-[var(--color-text-muted)] transition-transform duration-200">
+                {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              </div>
+            )}
+          </button>
+
+          {/* Submenu */}
+          <div className={clsx(
+            "overflow-hidden transition-all duration-300 ease-in-out",
+            isExpanded && !isCollapsed ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          )}>
+            {item.children.map(child => renderNavLink(child.icon, child.label, child.path, true))}
+          </div>
+        </div>
+      );
+    }
+
+    return renderNavLink(item.icon, item.label, item.path!, false);
+  };
+
   return (
     <aside className={clsx(
       "h-full flex flex-col bg-[var(--color-bg-card)] border-r border-[var(--color-border-subtle)] transition-all duration-300 relative",
@@ -48,14 +288,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose, isCollapsed = false, 
       {/* Header - Logo Acts as Toggle */}
       <div className={clsx(
         "flex shrink-0 transition-all duration-300 border-b border-[var(--color-border-subtle)] h-16 items-center overflow-hidden",
-        isCollapsed ? "px-[20px]" : "px-6" // 80px width. Logo 40px. 20px padding sides = Center.
+        isCollapsed ? "px-[20px]" : "px-6"
       )}>
         {/* Clickable Logo Container */}
         <button
           onClick={toggleCollapse}
           className={clsx(
             "flex items-center gap-3 overflow-hidden group outline-none text-left w-full sm:w-auto",
-            // Remove justify-center, rely on padding
           )}
           title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
@@ -83,67 +322,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose, isCollapsed = false, 
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-6 space-y-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            onClick={onClose}
-            title={isCollapsed ? item.label : undefined}
-            className={({ isActive }) => clsx(
-              'group flex items-center gap-3 py-2.5 mx-3 rounded-xl transition-all duration-200 outline-none focus:ring-2 focus:ring-blue-500/20 relative',
-              // Padding Logic for smooth icon transition
-              // Collapsed: Center of 80px (w-20) is 40px. Icon 20px. Start at 30px.
-              // Container has mx-3 (12px margins). So box is 80-24 = 56px wide.
-              // Center of 56px is 28px. Icon 20px. Start at 18px.
-              // Let's stick to simple padding on the container without margins? No, margins look nice (floating buttons)
-              // If mx-3: 
-              // Expanded (w-64 = 256px): Box 232px. pl-3 (12px) looks standard.
-              // Collapsed (w-20 = 80px): Box 56px. Center is 28px. Icon 20px (width). Padding Left = (56 - 20)/2 = 18px.
-              isCollapsed ? "pl-[18px]" : "pl-3",
-
-              isActive
-                ? 'bg-blue-50 text-blue-600 font-semibold'
-                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] hover:bg-[var(--color-bg-page)]',
-            )}
-          >
-            {({ isActive }) => (
-              <>
-                {isActive && (
-                  <div className={clsx(
-                    "absolute left-0 w-1 bg-blue-600 rounded-r-full transition-all duration-300",
-                    isCollapsed ? "h-2 top-1/2 -translate-y-1/2 left-0.5" : "h-6 top-1/2 -translate-y-1/2 left-0"
-                  )} />
-                )}
-                <item.icon
-                  size={20}
-                  strokeWidth={isActive ? 2 : 1.75}
-                  className={clsx(
-                    "shrink-0 transition-transform duration-200",
-                    isActive ? "scale-100" : "group-hover:scale-110"
-                  )}
-                />
-                <span className={clsx(
-                  "truncate transition-all duration-300 ease-in-out text-[14px]",
-                  isCollapsed ? "w-0 opacity-0 translate-x-[-10px] ml-0" : "w-auto opacity-100 translate-x-0 ml-0"
-                )}>
-                  {item.label}
-                </span>
-              </>
-            )}
-          </NavLink>
-        ))}
+      <nav ref={navRef} className="flex-1 overflow-y-auto py-6 space-y-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] relative">
+        {/* Animated Selection Indicator */}
+        <div
+          className="absolute left-3 w-1 bg-blue-600 rounded-full pointer-events-none z-10"
+          style={{
+            top: indicatorStyle.top,
+            height: indicatorStyle.height,
+            opacity: indicatorStyle.opacity,
+            transition: 'top 300ms cubic-bezier(0.4, 0, 0.2, 1), height 200ms ease-out, opacity 200ms ease-out',
+          }}
+        />
+        {menuItems.map(item => renderMenuItem(item))}
       </nav>
 
       {/* Footer / User Profile */}
       <div className="p-4 border-t border-[var(--color-border-subtle)] bg-[var(--color-bg-page)]/50">
         <div className={clsx(
           "flex items-center gap-3 p-2 rounded-xl transition-all duration-200 hover:bg-[var(--color-bg-card)] hover:shadow-sm border border-transparent hover:border-[var(--color-border-subtle)] cursor-pointer group",
-          // Footer Center Logic: Box 80px - 32px (p-4) = 48px width.
-          // Profile Pic 40px (w-10).
-          // 48 - 40 = 8px. Padding 4px.
-          // Expanded: Box large.
-          isCollapsed ? "justify-center" : "" // Using justify-center here is ok as it contains img
+          isCollapsed ? "justify-center" : ""
         )}>
           <div className="relative shrink-0">
             <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center border-2 border-white shadow-sm shrink-0 overflow-hidden">
