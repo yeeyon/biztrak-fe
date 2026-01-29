@@ -139,12 +139,19 @@ export const MultiCurrencyFX: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-linear-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-100 dark:border-blue-800 rounded-xl p-6 shadow-sm">
-            <h4 className="font-bold text-blue-900 dark:text-blue-300 text-sm mb-2 flex items-center gap-2">
-              <TrendingUp size={16} /> Hedging Recommendation
-            </h4>
-            <p className="text-sm text-blue-800 dark:text-blue-200 leading-relaxed font-medium opacity-90">
-              USD exposure has increased by 15% this quarter. Consider locking in forward contracts for upcoming procurement payments in Q2 to mitigate currency risk.
+          <div className="bg-[var(--color-bg-card)] border border-[var(--color-border-subtle)] rounded-2xl p-6 shadow-sm relative overflow-hidden group/recommendation">
+            <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover/recommendation:opacity-[0.05] transition-opacity translate-x-4 -translate-y-4">
+              <TrendingUp size={120} />
+            </div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="bg-indigo-50 dark:bg-indigo-900/30 p-2 rounded-lg text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800/50">
+                <TrendingUp size={18} />
+              </div>
+              <h4 className="font-bold text-[var(--color-text-main)] text-sm uppercase tracking-wider">Hedging Recommendation</h4>
+            </div>
+            <p className="text-sm text-[var(--color-text-muted)] leading-relaxed font-medium">
+              USD exposure has increased by <span className="text-indigo-600 dark:text-indigo-400 font-bold text-base">15%</span> this quarter.
+              Consider locking in forward contracts for upcoming procurement payments in <span className="text-[var(--color-text-main)] font-bold italic">Q2</span> to mitigate currency risk.
             </p>
           </div>
         </div>

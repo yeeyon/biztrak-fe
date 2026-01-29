@@ -138,6 +138,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose, isCollapsed = false, 
     const navElement = navRef.current;
 
     if (activeLink && navElement) {
+      // Check if the active link is inside a collapsed submenu
+      const parentMenu = menuItems.find(item =>
+        item.children?.some(child => child.path === location.pathname)
+      );
+
+      // Hide indicator if parent menu is collapsed or sidebar is collapsed
+      if (parentMenu && (!expandedMenus.has(parentMenu.label) || isCollapsed)) {
+        setIndicatorStyle(prev => ({ ...prev, opacity: 0 }));
+        return;
+      }
+
       const navRect = navElement.getBoundingClientRect();
       const linkRect = activeLink.getBoundingClientRect();
 
@@ -149,7 +160,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose, isCollapsed = false, 
     } else {
       setIndicatorStyle(prev => ({ ...prev, opacity: 0 }));
     }
-  }, [location.pathname]);
+  }, [location.pathname, expandedMenus, isCollapsed]);
 
   // Update position on location change and after menu expansion animations
   useEffect(() => {

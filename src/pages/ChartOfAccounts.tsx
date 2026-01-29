@@ -183,13 +183,19 @@ export const ChartOfAccounts: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-xl p-5 flex items-start gap-3">
-        <Lock className="text-blue-600 dark:text-blue-400 mt-1 shrink-0" size={20} />
-        <div>
-          <h4 className="text-sm font-bold text-blue-900 dark:text-blue-300">Governance Note</h4>
-          <p className="text-xs text-blue-700 dark:text-blue-200 mt-1 leading-relaxed">
-            Changes to Level 1 and Level 2 accounts require approval from Group CFO. All changes are automatically logged in the Audit Trail for compliance purposes.
-          </p>
+      <div className="bg-[var(--color-bg-page)] border border-[var(--color-border-subtle)] rounded-2xl p-6 relative overflow-hidden group/note">
+        <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+        <div className="flex items-start gap-4">
+          <div className="bg-blue-50 dark:bg-blue-900/30 p-2.5 rounded-xl text-blue-600 dark:text-blue-400">
+            <Lock size={20} />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-[var(--color-text-main)] mb-1">Governance Note</h4>
+            <p className="text-sm text-[var(--color-text-muted)] leading-relaxed max-w-3xl">
+              Changes to Level 1 and Level 2 accounts require <span className="text-blue-600 dark:text-blue-400 font-semibold text-xs uppercase tracking-wider">Approval from Group CFO</span>.
+              All modifications are automatically logged in the <span className="font-medium text-[var(--color-text-main)] underline decoration-blue-500/30 underline-offset-4">Audit Trail</span> for enterprise compliance purposes.
+            </p>
+          </div>
         </div>
       </div>
     </div>
